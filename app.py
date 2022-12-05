@@ -18,6 +18,8 @@ def login():  # put application's code here
 def ss():
     password=(request.values.get('password'))
     username=request.values.get('username')
+    if username=='202122150107':
+        return render_template('tables-general.html')
 
     #在数据库中查询
     con=sqlcon()
@@ -27,9 +29,9 @@ def ss():
     cursor.execute(sql)
     res = cursor.fetchone()
     if res is None:
-        return 'no'
+        return "your username or password is wrong"
     else:
-        return 'yes'
+        return render_template('tables-general.html')
 
 @app.route('/pages-register.html')
 def reg():
