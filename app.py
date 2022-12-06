@@ -28,10 +28,14 @@ def ss():
     print("select * from user where username='{}' and password = '{}'".format(username,password))
     cursor.execute(sql)
     res = cursor.fetchone()
+    cursor.execute('SELECT * FROM `user`')
+    data=cursor.fetchall()
+    print(res)
+    print(data)
     if res is None:
         return "your username or password is wrong"
     else:
-        return render_template('tables-general.html')
+        return render_template('tables-general.html',datas=data)
 
 @app.route('/pages-register.html')
 def reg():
