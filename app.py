@@ -30,16 +30,32 @@ def ss():
     res = cursor.fetchone()
     cursor.execute('SELECT * FROM `user`')
     data=cursor.fetchall()
-    print(res)
-    print(data)
+
     if res is None:
         return "your username or password is wrong"
     else:
         return render_template('tables-general.html',datas=data)
 
-@app.route('/pages-register.html')
+@app.route('/pages-register.html',methods=['POST','GET'])
 def reg():
-    return render_template('pages-register.html')
+    print(request.values)
+    con=sqlcon()
+    cur=con.cursor()
+    if request.values.get('name') is None:
+        return render_template('pages-register.html')
+    else:
+        username = request.values.get('name')
+        email = request.values.get('email')
+        password = request.values.get('password')
+        sql = "insert into user values ('0','{}','{}','{}') ".format(username,email,password)
+        print(sql)
+        con = sqlcon()
+        cur = con.cursor()
+        print(sql)
+        cur.execute(sql)
+        con.commit()
+        return "注册成功"
+
 
 if __name__ == '__main__':
     app.run()
