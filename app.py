@@ -10,7 +10,12 @@ def sqlcon():
         database='user'
     )
     return con
-
+def GetData():
+    con = sqlcon()
+    cursor = con.cursor()
+    cursor.execute('SELECT * FROM `user`')
+    data = cursor.fetchall()
+    return data
 @app.route('/')
 def login():  # put application's code here
     return render_template('pages-login.html')
@@ -25,15 +30,14 @@ def ss():
     con=sqlcon()
     cursor=con.cursor()
     sql="select * from user where username='{}' and password = '{}'".format(username,password)
-    print("select * from user where username='{}' and password = '{}'".format(username,password))
     cursor.execute(sql)
     res = cursor.fetchone()
-    cursor.execute('SELECT * FROM `user`')
-    data=cursor.fetchall()
+
 
     if res is None:
         return "your username or password is wrong"
     else:
+        data=GetData()
         return render_template('tables-general.html',datas=data)
 
 @app.route('/pages-register.html',methods=['POST','GET'])
@@ -56,6 +60,14 @@ def reg():
         con.commit()
         return "注册成功"
 
+@app.route('/update',methods=['POST','GET'])
+def update():
+    id=request.values.get('id')
+    username=request.values.get('name')
+    password=request.values.get('password')
+    email=request.values.get('email')
+    
+    return render_template('forms-layouts.html',id=id,username=username,password=password,email=email)
 
 if __name__ == '__main__':
     app.run()

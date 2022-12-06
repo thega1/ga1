@@ -277,7 +277,7 @@
           <li class="breadcrumb-item active">General</li>
         </ol>
       </nav>
-    </div><!-- End Page Title -->
+    </div>
 
     <section class="section">
       <div class="row">
@@ -299,14 +299,14 @@
                     <th scope="col">operations</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody><!-- mytarget -->
                 {% for data in datas %}
                     <tr>
                     <th scope="row">{{ data[0] }}</th>
                     <td>{{ data[1] }}</td>
                     <td>{{ data[2] }}</td>
                     <td>{{ data[3] }}</td>
-{#                        <td><a href="/update?id={{ user[0] }}&name={{ user[1] }}&email={{ user[2] }}&pwd={{ user[3] }}">修改</a> <a href="#">删除</a> </td>#}
+                        <td><a href="/update?id={{ data[0] }}&name={{ data[1] }}&password={{ data[2] }}&email={{ data[3] }}">修改</a> <a href="#">删除</a> </td>
                   </tr>
                 {% endfor %}
                 </tbody>
