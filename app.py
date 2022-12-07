@@ -91,6 +91,15 @@ def update():
         cursor.execute(sql)
         con.commit()
         return "delete"
+    if targ == "update":
+        con = sqlcon()
+        cursor = con.cursor()
+        sql = "update  user set  `name`='{}',`password`='{}',email='{}'WHERE id ={} ".format(name, password, email,id)
+        print(sql)
+        cursor.execute(sql)
+        con.commit()
+        return "update"
+
     if request.values.get('targ') =="update":
             return render_template('forms-layouts.html', id=id, name=name, password=password, email=email)
 
