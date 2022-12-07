@@ -22,22 +22,24 @@ def login():  # put application's code here
 @app.route('/logins',methods=['POST','GET'])
 def ss():
     password=(request.values.get('password'))
-    username=request.values.get('username')
-    if username=='202122150107':
+    name=request.values.get('username')
+    print(name)
+    if name=='202122150107':
         return render_template('tables-general.html')
 
     #在数据库中查询
     con=sqlcon()
     cursor=con.cursor()
-    sql="select * from user where username='{}' and password = '{}'".format(username,password)
+    sql="select * from user where name='{}' and password = '{}'".format(name,password)
     cursor.execute(sql)
     res = cursor.fetchone()
-
+    print(sql)
 
     if res is None:
-        return "your username or password is wrong"
+        return "your name or password is wrong"
     else:
         data=GetData()
+        print(name)
         return render_template('tables-general.html',datas=data)
 
 @app.route('/pages-register.html',methods=['POST','GET'])
@@ -48,10 +50,10 @@ def reg():
     if request.values.get('name') is None:
         return render_template('pages-register.html')
     else:
-        username = request.values.get('name')
+        name = request.values.get('name')
         email = request.values.get('email')
         password = request.values.get('password')
-        sql = "insert into user values ('0','{}','{}','{}') ".format(username,email,password)
+        sql = "insert into user values ('0','{}','{}','{}') ".format(name,password,email)
         print(sql)
         con = sqlcon()
         cur = con.cursor()
@@ -63,11 +65,12 @@ def reg():
 @app.route('/update',methods=['POST','GET'])
 def update():
     id=request.values.get('id')
-    username=request.values.get('name')
+    name=request.values.get('username')
     password=request.values.get('password')
     email=request.values.get('email')
-    
-    return render_template('forms-layouts.html',id=id,username=username,password=password,email=email)
+    if request.values.get('targ') =="YES":
+        return "yes"
+    return render_template('forms-layouts.html',id=id,name=name,password=password,email=email)
 
 if __name__ == '__main__':
     app.run()
