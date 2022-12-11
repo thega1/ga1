@@ -16,11 +16,6 @@ def GetData():
     cursor.execute('SELECT * FROM `user`')
     data = cursor.fetchall()
     return data
-def gai():
-    pass
-def shan():
-    pass
-
 
 @app.route('/')
 def login():  # put application's code here
